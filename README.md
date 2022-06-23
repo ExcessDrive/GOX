@@ -1,8 +1,3 @@
-# WIP
-
-This page is still work in progress, and the instructions for installing and using GOX will improve in the following week,
-thank you
-
 # GOX
 
 GOX is a suite of POX components that allow the development of SDN applications that rely on a Neo4j Graph Database-based network topology.
