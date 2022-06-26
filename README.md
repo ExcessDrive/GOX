@@ -70,6 +70,7 @@ sudo apt install neo4j
 You also need to install Neo4j's python module with pip:
 
 ```bash
+sudo apt install pip
 pip install neo4j
 ```
 
