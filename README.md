@@ -118,7 +118,7 @@ The default login is "neo4j" and password is "neo4j". You will then be asked to 
 
 ## Quickstart:
 
-Once you have installed, configured and initialised Neo4j, you can start POX (make sure you have an underlying network, like one emulated by Mininet)
+Once you have installed, configured and initialised Neo4j, you can start GOX (make sure you have an underlying network, like one emulated by Mininet)
 
 ```bash
 ./pox.py gox --uri="bolt://localhost:7687"
