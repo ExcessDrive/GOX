@@ -42,9 +42,17 @@ This script will:
 
 * Add Neo4j's repositories
 * Install Neo4j
+* Install Neo4j's pip module
 * Install Mininet
 * Download POX
 * Install GOX
+
+You still need to configure your Neo4j server so as to be able to reach it. Especially by decommenting these options in `/etc/neo4j/neo4j.conf`
+
+```
+dbms.default_database=neo4j             # Creates default database
+dbms.default_listen_address=0.0.0.0     # Accepts to be contacted via any IP address
+```
 
 ## Manual Install
 
@@ -53,10 +61,16 @@ This script will:
 First, we should install the Neo4j server that will host the database. To do that, we will follow [Neo4j's official guide](https://debian.neo4j.com/) on installing Neo4j server on a Debian-based machine
 
 ```bash
-wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo tee /etc/apt/trusted.gpg.d/neotechnology.gpg.key
+wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
 echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list
 sudo apt-get update
 sudo apt install neo4j
+```
+
+You also need to install Neo4j's python module with pip:
+
+```bash
+pip install neo4j
 ```
 
 You may as well configure your Neo4j server so as to be able to reach it. Especially by decommenting these options in `/etc/neo4j/neo4j.conf`
@@ -98,7 +112,13 @@ GOX needs the neo4j database to run:
 sudo neo4j start
 ```
 
+You need to initialise the Neo4j database by connecting to it for the first time via your web browser `http://<ip>:7474`
+The default login is "neo4j" and password is "neo4j". You will then be asked to change neo4j's password. Once this is done, you may need to restart neo4j.
+
+
 ## Quickstart:
+
+Once you have installed, configured and initialised Neo4j, you can start POX (make sure you have an underlying network, like one emulated by Mininet)
 
 ```bash
 ./pox.py gox --uri="bolt://localhost:7687"
@@ -120,7 +140,16 @@ To be able to connect properly to the Neo4j database, you have to specify a few 
 
 ## GOX and POX with Mininet
 
-GOX can be used with Mininet for emulating a network. In fact, along with GOX on this repository are 3 topologies taken from the Internet Topology Zoo, and converted using [Sjas's "Assessing Mininet" repository](https://github.com/sjas/assessing-mininet) from a .graphml format to a Mininet python-based topology.
+GOX can be used with Mininet for emulating a network. For example, here is how to launch a simple tree topology with mininet:
+
+```bash
+sudo mn \
+    --topo tree,depth=2,fanout=5\
+    --controller=remote,ip=127.0.0.1,port=6633
+```
+
+
+Along with GOX on this repository are 3 topologies taken from the Internet Topology Zoo, and converted using [Sjas's "Assessing Mininet" repository](https://github.com/sjas/assessing-mininet) from a .graphml format to a Mininet python-based topology.
 
 To use such topologies, go into the `mininet_topologies` folder, and launch Mininet with the following commande, replacing `<topology>` with the topology you want:
 
@@ -163,7 +192,6 @@ As advised by the [POX documentation](https://noxrepo.github.io/pox-doc/html/#op
 ```
 ./pox.py \
     gox --uri="bolt://localhost:7687" --username="neo4j" --password="password" \
-    log.level --DEBUG \
     openflow.spanning_tree --no-flood --hold-down
 ```
 
