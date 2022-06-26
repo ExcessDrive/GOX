@@ -7,7 +7,7 @@ wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add - 1>
 echo 'deb https://debian.neo4j.com stable latest' | sudo tee /etc/apt/sources.list.d/neo4j.list 1>/dev/null
 
 echo "[+] Updating APT database"
-sudo apt update 1>/dev/null
+sudo apt update
 
 echo "[+] Installing neo4j-server"
 sudo apt install neo4j 1>/dev/null
