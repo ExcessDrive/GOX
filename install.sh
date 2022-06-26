@@ -12,7 +12,8 @@ sudo apt update
 echo "[+] Installing neo4j-server"
 sudo apt install neo4j
 echo "[i] You still need to configure neo4j (/etc/neo4j/neo4j.conf)"
-echo "[+] Installing neo4j pip module"
+echo "[+] Installing pip and neo4j pip module"
+sudo apt install pip
 pip install neo4j
 
 echo "[+] Installing mininet"
